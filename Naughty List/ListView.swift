@@ -10,10 +10,9 @@ import SwiftData
 
 
 struct ListView: View {
-    @Query private var children: [Child]    
+    @Query private var children: [Child]
     
-    @Environment(\.modelContext) private var modelContext
-    @Environment(\.dismiss) private var dismiss
+
     
     var body: some View {
         NavigationStack {
@@ -32,12 +31,9 @@ struct ListView: View {
             }
             .listStyle(.plain)
             .navigationTitle("Schmutzli's List")
-            
         }
         .padding()
-       
     }
-    
 }
 
 
