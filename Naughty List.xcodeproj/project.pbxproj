@@ -10,22 +10,9 @@
 		61B85A452D67FF650044E4C5 /* Naughty List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Naughty List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		6118AC972D70C247007CD21C /* Exceptions for "Naughty List" folder in "Naughty List" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"Naughty-List-Info.plist",
-			);
-			target = 61B85A442D67FF650044E4C5 /* Naughty List */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		61B85A472D67FF650044E4C5 /* Naughty List */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				6118AC972D70C247007CD21C /* Exceptions for "Naughty List" folder in "Naughty List" target */,
-			);
 			path = "Naughty List";
 			sourceTree = "<group>";
 		};
