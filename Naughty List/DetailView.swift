@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import AVFAudio
 
 struct DetailView: View {
     @State var child: Child
@@ -15,6 +16,9 @@ struct DetailView: View {
     @State private var naughty = true
     @State private var smacks: Int =  1
     @State private var notes = ""
+    @State private var audioPlayer: AVAudioPlayer!
+    @State private var animateBoy = true
+    @State private var animateGirl = true
     
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
@@ -63,15 +67,45 @@ struct DetailView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(height: 250)
+                    .scaleEffect(animateBoy ? 1.0 : 0.9) // Scale down as part of withAnimation
+                    .onTapGesture {
+                        playSound(soundName: "smack")
+                        animateBoy = false // Will immediately shrink to 90% using scaleEffect ternary, above
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.3)) {
+                            animateBoy = true // will go from 90%% sizer to 100% size but using the spring animation over 0.3 seconds
+                        }
+                    }                    
                 
                 Image(.girl)
                     .resizable()
                     .scaledToFit()
                     .frame(height: 250)
+                    .scaleEffect(animateGirl ? 1.0 : 0.9)
+                    .onTapGesture {
+                        playSound(soundName: "smack")
+                        animateGirl = false
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.3)) {
+                            animateGirl = true
+                        }
+                    }
             }
         }
         .font(.title2)
         .padding()
+    }
+    
+    func playSound(soundName: String) {
+        guard let soundFile = NSDataAsset(name: soundName) else {
+            print("😡ERROR: Could not read file named d\(soundName)")
+            return
+        }
+        
+        do {
+            audioPlayer = try AVAudioPlayer(data: soundFile.data)
+            audioPlayer.play()
+        } catch {
+            print("😡ERROR: \(error.localizedDescription) creating AVAudioPlayer")
+        }
     }
 }
 
