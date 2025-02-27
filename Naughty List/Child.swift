@@ -39,7 +39,7 @@ extension Child {
         let container = try! ModelContainer(for: Child.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
         
         // Add Mock Data
-        var children: [Child] = [
+        let children: [Child] = [
             Child(
                 firstName: "Bad",
                 lastName: "Bunny",

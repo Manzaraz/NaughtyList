@@ -12,7 +12,7 @@ import SwiftData
 struct Naughty_ListApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ListView()
                 .modelContainer(for: Child.self)
         }
     }
