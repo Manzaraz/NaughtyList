@@ -35,9 +35,16 @@ struct DetailView: View {
             
             Toggle("Naughty?", isOn: $naughty)
                 .bold()
+                .onChange(of: naughty) {
+                    smacks = (naughty == true && smacks == 0) ? 1 : smacks
+                    smacks = naughty == false ? 0 : smacks
+                }
             
             Stepper("Smacks Deserved", value: $smacks, in: 0...5)
                 .bold()
+                .onChange(of: smacks) {
+                    naughty = smacks == 0 ? false : true
+                }
             
             Text("\(smacks)")
                 .font(.largeTitle)
@@ -51,7 +58,7 @@ struct DetailView: View {
             
             Spacer()
             
-            HStack(alignment: .center) {
+            HStack(alignment: .center ) {
                 Image(.boy)
                     .resizable()
                     .scaledToFit()
@@ -62,7 +69,6 @@ struct DetailView: View {
                     .scaledToFit()
                     .frame(height: 250)
             }
-            
         }
         .font(.title2)
         .padding()
