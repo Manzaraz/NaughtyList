@@ -6,12 +6,19 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct Naughty_ListApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .modelContainer(for: Child.self)
         }
+    }
+    
+    // Will allow us to find where our simulator data is saved:
+    init() {
+        print(URL.applicationSupportDirectory.path(percentEncoded: false))
     }
 }
