@@ -7,10 +7,13 @@
 
 import SwiftUI
 import SwiftData
+import AVFAudio
 
 struct ListView: View {
     @Query private var children: [Child]
     @State private var sheetIsPresented = false
+    @State private var audioPlayer: AVAudioPlayer!
+    
     @Environment(\.modelContext) private var modelContext
     
     var body: some View {
@@ -63,6 +66,9 @@ struct ListView: View {
                 DetailView(child: Child())
             }
         }
+        .onAppear {
+            playSound(soundName: "riff")
+        }
     }
 }
 
@@ -70,4 +76,19 @@ struct ListView: View {
 #Preview {
     ListView()
         .modelContainer(Child.preview)
+}
+
+extension ListView {
+    func playSound(soundName: String) {
+        guard let soundFile = NSDataAsset(name: soundName) else {
+            print("🎶ERROR: Could not read file named \(soundName)")
+            return
+        }
+        do {
+            audioPlayer = try AVAudioPlayer(data: soundFile.data)
+            audioPlayer.play()
+        } catch  {
+            print("🎶ERROR: \(error.localizedDescription) creating AVAudioPlayer")
+        }
+    }
 }

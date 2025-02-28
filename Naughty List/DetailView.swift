@@ -58,8 +58,9 @@ struct DetailView: View {
             Text("Notes:")
                 .bold()
             
-            TextField("notes", text: $notes)
+            TextField("notes", text: $notes, axis: .vertical)
                 .textFieldStyle(.roundedBorder)
+                
             
             Spacer()
             
