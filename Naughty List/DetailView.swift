@@ -24,6 +24,7 @@ struct DetailView: View {
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
+        
         VStack(alignment: .leading) {
             Text("First Name:")
                 .bold()
@@ -74,7 +75,7 @@ struct DetailView: View {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.3)) {
                             animateBoy = true // will go from 90%% sizer to 100% size but using the spring animation over 0.3 seconds
                         }
-                    }                    
+                    }
                 
                 Image(.girl)
                     .resizable()
@@ -90,8 +91,45 @@ struct DetailView: View {
                     }
             }
         }
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button("Cancel") {
+                    dismiss()
+                }
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("Save") {
+                    // move data from UI variables to the child that was passed in
+                    child.firstName = firstName
+                    child.lastName = lastName
+                    child.naughty = naughty
+                    child.smacks = smacks
+                    child.notes = notes
+                    
+                    modelContext.insert(child)
+                    
+                    // Force a seve so you can cgheck this with db browser app
+                    guard let _ = try? modelContext.save() else {
+                        print("😡ERROR: Save on DetailView did not work")
+                        return
+                    }
+                    
+                    dismiss()
+                }
+            }
+        }
         .font(.title2)
         .padding()
+        .onAppear {
+            // Could also do this in an init, but we've learned onAppear
+            firstName = child.firstName
+            lastName = child.lastName
+            naughty = child.naughty
+            smacks = child.smacks
+            notes = child.notes
+        }
+        
     }
     
     func playSound(soundName: String) {
