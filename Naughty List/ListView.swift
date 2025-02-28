@@ -30,6 +30,18 @@ struct ListView: View {
                                 .font(.title2)
                         }
                     }
+                    .swipeActions {
+                        Button(role: .destructive) {
+                            modelContext.delete(child)
+                            guard let _ = try? modelContext.save() else {
+                                print("🤬ERROR: Save after .delete in ListView did not work.")
+                                return
+                            }
+                        } label: {
+                            Label("Delete", systemImage: "trash.fill")
+                        }
+
+                    }
                 }
             }
             .listStyle(.plain)
@@ -44,6 +56,7 @@ struct ListView: View {
                     
                 }
             }
+            
         }
         .sheet(isPresented: $sheetIsPresented) {
             NavigationStack{
